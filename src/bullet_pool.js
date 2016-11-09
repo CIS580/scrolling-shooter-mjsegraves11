@@ -16,10 +16,11 @@ module.exports = exports = BulletPool;
  * Creates a BulletPool of the specified size
  * @param {uint} size the maximum number of bullets to exits concurrently
  */
-function BulletPool(maxSize) {
+function BulletPool(maxSize, radius) {
   this.pool = new Float32Array(4 * maxSize);
   this.end = 0;
   this.max = maxSize;
+  this.radius = radius;
 }
 
 /**
@@ -87,10 +88,10 @@ BulletPool.prototype.render = function(elapsedTime, ctx) {
   // Render the bullets as a single path
   ctx.save();
   ctx.beginPath();
-  ctx.fillStyle = "black";
+  ctx.fillStyle = "orange";
   for(var i = 0; i < this.end; i++) {
     ctx.moveTo(this.pool[4*i], this.pool[4*i+1]);
-    ctx.arc(this.pool[4*i], this.pool[4*i+1], 2, 0, 2*Math.PI);
+    ctx.arc(this.pool[4*i], this.pool[4*i+1], this.radius, 0, 2*Math.PI);
   }
   ctx.fill();
   ctx.restore();
